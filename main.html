@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garment Quality Control System</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .shift-hours {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .hour-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .hour-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .hour-card h3 {
+            margin-top: 0;
+            color: #3498db;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .result {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-top: 5px;
+        }
+        .summary {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        .summary h2 {
+            margin-top: 0;
+            text-align: center;
+            color: #ecf0f1;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            text-align: center;
+        }
+        .summary-item {
+            background-color: #34495e;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .summary-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3498db;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px auto;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        button.clear {
+            background-color: #e74c3c;
+        }
+        button.clear:hover {
+            background-color: #c0392b;
+        }
+        .positive {
+            color: #2ecc71;
+        }
+        .negative {
+            color: #e74c3c;
+        }
+
+        @media (max-width: 768px) {
+            .shift-hours {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 480px) {
+            .shift-hours {
+                grid-template-columns: 1fr;
+            }
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Garment Quality Control System</h1>
+        
+        <div class="shift-hours">
+            <!-- Hour 1 -->
+            <div class="hour-card">
+                <h3>Hour 1</h3>
+                <div class="form-group">
+                    <label for="garment1">Garments Checked</label>
+                    <input type="number" id="garment1" min="0" placeholder="Enter quantity">
+                </div>
+                <div class="form-group">
+                    <label for="defect1">Defect Quantity</label>
+                    <input type="number" id="defect1" min="0" placeholder="Enter defects">
+                </div>
+                <div class="result" id="result1">Defect %: 0%</div>
+            </div>
+            
+            <!-- Hour 2 -->
+            <div class="hour-card">
+                <h3>Hour 2</h3>
+                <div class="form-group">
+                    <label for="garment2">Garments Checked</label>
+                    <input type="number" id="garment2" min="0" placeholder="Enter quantity">
+                </div>
+                <div class="form-group">
+                    <label for="defect2">Defect Quantity</label>
+                    <input type="number" id="defect2" min="0" placeholder="Enter defects">
+                </div>
+                <div class="result" id="result2">Defect %: 0%</div>
+            </div>
+            
+            <!-- Hour 3 -->
+            <div class="hour-card">
+                <h3>Hour 3</h3>
+                <div class="form-group">
+                    <label for="garment3">Garments Checked</label>
+                    <input type="number" id="garment3" min="0" placeholder="Enter quantity">
+                </div>
+                <div class="form-group">
+                    <label for="defect3">Defect Quantity</label>
+                    <input type="number" id="defect3" min="0" placeholder="Enter defects">
+                </div>
+                <div class="result" id="result3">Defect %: 0%</div>
+            </div>
+            
+            <!-- Hour 4 -->
+            <div class="hour-card">
+                <h3>Hour 4</h3>
+                <div class="form-group">
+                    <label for="garment4">Garments Checked</label>
+                    <input type="number" id="garment4" min="0" placeholder="Enter quantity">
+                </div>
+                <div class="form-group">
+                    <label for="defect4">Defect Quantity</label>
+                    <input type="number" id="defect4" min="0" placeholder="Enter defects">
+                </div>
+                <div class="result" id="result4">Defect %: 0%</div>
+            </div>
+            
+            <!-- Hour 5 -->
+            <div class="hour-card">
+                <h3>Hour 5</h3>
+                <div class="form-group">
+                    <label for="garment5">Garments Checked</label>
+                    <input type="number" id="garment5" min="0" placeholder="Enter quantity">
+                </div>
+                <div class="form-group">
+                    <label for="defect5">Defect Quantity</label>
+                    <input type="number" id="defect5" min="0" placeholder="Enter defects">
+                </div>
+                <div class="result" id="result5">Defect %: 0%</div>
+            </div>
+            
+            <!-- Hour 6 -->
+            <div class="hour-card">
+                <h3>Hour 6</h3>
+                <div class="form-group">
+                    <label for="garment6">Garments Checked</label>
+                    <input type="number" id="garment6" min="0" placeholder="Enter quantity">
+                </div>
+                <div class="form-group">
+                    <label for="defect6">Defect Quantity</label>
+                    <input type="number" id="defect6" min="0" placeholder="Enter defects">
+                </div>
+                <div class="result" id="result6">Defect %: 0%</div>
+            </div>
+            
+            <!-- Hour 7 -->
+            <div class="hour-card">
+                <h3>Hour 7</h3>
+                <div class="form-group">
+                    <label for="garment7">Garments Checked</label>
+                    <input type="number" id="garment7" min="0" placeholder="Enter quantity">
+                </div>
+                <div class="form-group">
+                    <label for="defect7">Defect Quantity</label>
+                    <input type="number" id="defect7" min="0" placeholder="Enter defects">
+                </div>
+                <div class="result" id="result7">Defect %: 0%</div>
+            </div>
+            
+            <!-- Hour 8 -->
+            <div class="hour-card">
+                <h3>Hour 8</h3>
+                <div class="form-group">
+                    <label for="garment8">Garments Checked</label>
+                    <input type="number" id="garment8" min="0" placeholder="Enter quantity">
+                </div>
+                <div class="form-group">
+                    <label for="defect8">Defect Quantity</label>
+                    <input type="number" id="defect8" min="0" placeholder="Enter defects">
+                </div>
+                <div class="result" id="result8">Defect %: 0%</div>
+            </div>
+            
+            <!-- Hour 9 -->
+            <div class="hour-card">
+                <h3>Hour 9</h3>
+                <div class="form-group">
+                    <label for="garment9">Garments Checked</label>
+                    <input type="number" id="garment9" min="0" placeholder="Enter quantity">
+                </div>
+                <div class="form-group">
+                    <label for="defect9">Defect Quantity</label>
+                    <input type="number" id="defect9" min="0" placeholder="Enter defects">
+                </div>
+                <div class="result" id="result9">Defect %: 0%</div>
+            </div>
+            
+            <!-- Hour 10 -->
+            <div class="hour-card">
+                <h3>Hour 10</h3>
+                <div class="form-group">
+                    <label for="garment10">Garments Checked</label>
+                    <input type="number" id="garment10" min="0" placeholder="Enter quantity">
+                </div>
+                <div class="form-group">
+                    <label for="defect10">Defect Quantity</label>
+                    <input type="number" id="defect10" min="0" placeholder="Enter defects">
+                </div>
+                <div class="result" id="result10">Defect %: 0%</div>
+            </div>
+            
+            <!-- Hour 11 -->
+            <div class="hour-card">
+                <h3>Hour 11</h3>
+                <div class="form-group">
+                    <label for="garment11">Garments Checked</label>
+                    <input type="number" id="garment11" min="0" placeholder="Enter quantity">
+                </div>
+                <div class="form-group">
+                    <label for="defect11">Defect Quantity</label>
+                    <input type="number" id="defect11" min="0" placeholder="Enter defects">
+                </div>
+                <div class="result" id="result11">Defect %: 0%</div>
+            </div>
+            
+            <!-- Hour 12 -->
+            <div class="hour-card">
+                <h3>Hour 12</h3>
+                <div class="form-group">
+                    <label for="garment12">Garments Checked</label>
+                    <input type="number" id="garment12" min="0" placeholder="Enter quantity">
+                </div>
+                <div class="form-group">
+                    <label for="defect12">Defect Quantity</label>
+                    <input type="number" id="defect12" min="0" placeholder="Enter defects">
+                </div>
+                <div class="result" id="result12">Defect %: 0%</div>
+            </div>
+        </div>
+        
+        <div class="button-container">
+            <button id="calculate-btn">Calculate Summary</button>
+            <button class="clear" id="clear-btn">Clear All Data</button>
+        </div>
+        
+        <div class="summary" id="summary">
+            <h2>Shift Summary</h2>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div>Total Garments</div>
+                    <div class="summary-value" id="total-garments">0</div>
+                </div>
+                <div class="summary-item">
+                    <div>Total Defects</div>
+                    <div class="summary-value" id="total-defects">0</div>
+                </div>
+                <div class="summary-item">
+                    <div>Defect Percentage</div>
+                    <div class="summary-value" id="total-percentage">0%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to calculate defect percentage for each hour
+        function calculateHourlyPercentage() {
+            for (let i = 1; i <= 12; i++) {
+                const garmentInput = document.getElementById(`garment${i}`);
+                const defectInput = document.getElementById(`defect${i}`);
+                const resultDiv = document.getElementById(`result${i}`);
+                
+                // Add event listeners to both inputs
+                garmentInput.addEventListener('input', updatePercentage);
+                defectInput.addEventListener('input', updatePercentage);
+                
+                function updatePercentage() {
+                    const garments = parseFloat(garmentInput.value) || 0;
+                    const defects = parseFloat(defectInput.value) || 0;
+                    
+                    let percentage = 0;
+                    if (garments > 0) {
+                        percentage = (defects / garments) * 100;
+                    }
+                    
+                    resultDiv.textContent = `Defect %: ${percentage.toFixed(2)}%`;
+                    
+                    // Color coding based on percentage
+                    if (percentage > 10) {
+                        resultDiv.className = 'result negative';
+                    } else if (percentage > 0) {
+                        resultDiv.className = 'result positive';
+                    } else {
+                        resultDiv.className = 'result';
+                    }
+                }
+            }
+        }
+        
+        // Function to calculate summary
+        function calculateSummary() {
+            let totalGarments = 0;
+            let totalDefects = 0;
+            
+            for (let i = 1; i <= 12; i++) {
+                const garments = parseFloat(document.getElementById(`garment${i}`).value) || 0;
+                const defects = parseFloat(document.getElementById(`defect${i}`).value) || 0;
+                
+                totalGarments += garments;
+                totalDefects += defects;
+            }
+            
+            let percentage = 0;
+            if (totalGarments > 0) {
+                percentage = (totalDefects / totalGarments) * 100;
+            }
+            
+            document.getElementById('total-garments').textContent = totalGarments;
+            document.getElementById('total-defects').textContent = totalDefects;
+            document.getElementById('total-percentage').textContent = `${percentage.toFixed(2)}%`;
+            
+            // Color coding for summary
+            if (percentage > 10) {
+                document.getElementById('total-percentage').className = 'summary-value negative';
+            } else if (percentage > 0) {
+                document.getElementById('total-percentage').className = 'summary-value positive';
+            } else {
+                document.getElementById('total-percentage').className = 'summary-value';
+            }
+        }
+
+        // Function to clear all data
+        function clearAllData() {
+            for (let i = 1; i <= 12; i++) {
+                document.getElementById(`garment${i}`).value = '';
+                document.getElementById(`defect${i}`).value = '';
+                document.getElementById(`result${i}`).textContent = 'Defect %: 0%';
+                document.getElementById(`result${i}`).className = 'result';
+            }
+            
+            document.getElementById('total-garments').textContent = '0';
+            document.getElementById('total-defects').textContent = '0';
+            document.getElementById('total-percentage').textContent = '0%';
+            document.getElementById('total-percentage').className = 'summary-value';
+        }
+        
+        // Initialize the page
+        window.onload = function() {
+            calculateHourlyPercentage();
+            
+            // Add event listener to the calculate button
+            document.getElementById('calculate-btn').addEventListener('click', calculateSummary);
+            
+            // Add event listener to the clear button
+            document.getElementById('clear-btn').addEventListener('click', clearAllData);
+            
+            // Also calculate summary when any input changes (optional)
+            const allInputs = document.querySelectorAll('input[type="number"]');
+            allInputs.forEach(input => {
+                input.addEventListener('input', calculateSummary);
+            });
+        };
+    </script>
+</body>
+</html>
